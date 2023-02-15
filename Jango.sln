@@ -3,19 +3,35 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33122.133
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Jango.Admin", "Jango.Admin", "{6F042E1D-2B93-4051-B113-209FB0197786}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Admin", "Admin", "{6F042E1D-2B93-4051-B113-209FB0197786}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Jango.Web", "Jango.Web", "{3391CA65-0678-4A81-831F-9166B66EFAF2}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{3391CA65-0678-4A81-831F-9166B66EFAF2}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Jango.Payment", "Jango.Payment", "{D30BF4D5-B0BB-4763-A3F5-73E58910FFE2}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Payment", "Payment", "{D30BF4D5-B0BB-4763-A3F5-73E58910FFE2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Admin", "Jango.Admin\Admin.csproj", "{2FE14D84-310D-49BF-B748-80188AB485D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Admin.API", "Admin\Admin.API\Admin.API.csproj", "{2FE14D84-310D-49BF-B748-80188AB485D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Admin.Domain", "Admin.Domain\Admin.Domain.csproj", "{2F268AC7-C252-4BFB-A877-C56EAEC7B9F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Admin.Domain", "Admin\Admin.Domain\Admin.Domain.csproj", "{2F268AC7-C252-4BFB-A877-C56EAEC7B9F8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Admin.Infrastructure", "Admin.Infrastructure\Admin.Infrastructure.csproj", "{1F0F5235-19CB-4479-A2B9-0AF7A0283611}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Admin.Infrastructure", "Admin\Admin.Infrastructure\Admin.Infrastructure.csproj", "{1F0F5235-19CB-4479-A2B9-0AF7A0283611}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Admin.Application", "Admin.Application\Admin.Application.csproj", "{6A8F3426-E42A-4ED9-A7EE-A8C7886223E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Admin.Application", "Admin\Admin.Application\Admin.Application.csproj", "{6A8F3426-E42A-4ED9-A7EE-A8C7886223E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payment.Application", "Payment.Application\Payment.Application.csproj", "{3BA40A3D-F66C-4755-8695-83CFFCEA6011}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payment.Domain", "Payment.Domain\Payment.Domain.csproj", "{8696E0BF-6EE6-447C-9200-93A20C9952D3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payment.Infrastructure", "Payment.Infrastructure\Payment.Infrastructure.csproj", "{79A3A7AB-1076-43AD-B476-C8B7626C9A1B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payment", "Payment\Payment.csproj", "{468D121D-F277-4B2D-B942-0A417A5696D3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "Web\Web.csproj", "{95A30E50-7884-48A0-A163-8A91F24B248F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web.Infrastructure", "Web.Infrastructure\Web.Infrastructure.csproj", "{B720E48F-A3AD-4782-B823-4A7A3554EC55}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web.Domain", "Web.Domain\Web.Domain.csproj", "{DBD1938D-076C-46D2-A671-320683CF7562}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web.Application", "Web.Application\Web.Application.csproj", "{A1E7B375-D901-4C78-B2A5-608DCA558BB0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

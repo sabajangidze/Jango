@@ -1,5 +1,5 @@
 
-namespace Jango
+namespace Payment
 {
     public class Program
     {
