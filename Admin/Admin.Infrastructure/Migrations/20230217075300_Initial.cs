@@ -72,6 +72,25 @@ namespace Admin.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Supplier",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CompanyName = table.Column<string>(type: "nvarchar(35)", maxLength: 35, nullable: false),
+                    Country = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
+                    City = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
+                    Street = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Supplier", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CustomerEmployee",
                 columns: table => new
                 {
@@ -128,6 +147,30 @@ namespace Admin.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ProductSupplier",
+                columns: table => new
+                {
+                    ProductsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SuppliersId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductSupplier", x => new { x.ProductsId, x.SuppliersId });
+                    table.ForeignKey(
+                        name: "FK_ProductSupplier_Products_ProductsId",
+                        column: x => x.ProductsId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProductSupplier_Supplier_SuppliersId",
+                        column: x => x.SuppliersId,
+                        principalTable: "Supplier",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "OrderProduct",
                 columns: table => new
                 {
@@ -170,6 +213,11 @@ namespace Admin.Infrastructure.Migrations
                 name: "IX_Orders_EmployeeId",
                 table: "Orders",
                 column: "EmployeeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductSupplier_SuppliersId",
+                table: "ProductSupplier",
+                column: "SuppliersId");
         }
 
         /// <inheritdoc />
@@ -182,10 +230,16 @@ namespace Admin.Infrastructure.Migrations
                 name: "OrderProduct");
 
             migrationBuilder.DropTable(
+                name: "ProductSupplier");
+
+            migrationBuilder.DropTable(
                 name: "Orders");
 
             migrationBuilder.DropTable(
                 name: "Products");
+
+            migrationBuilder.DropTable(
+                name: "Supplier");
 
             migrationBuilder.DropTable(
                 name: "Customers");
