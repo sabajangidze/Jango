@@ -1,3 +1,4 @@
+using Admin.IoC;
 
 namespace Jango.Admin
 {
@@ -6,6 +7,7 @@ namespace Jango.Admin
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            Container.Setup(builder.Services, builder.Configuration);
 
             // Add services to the container.
 
