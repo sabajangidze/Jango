@@ -33,7 +33,7 @@ namespace Admin.Domain.Entities
 
         public DateTime? DeletedAt { get; set; }
 
-        public virtual ICollection<CustomersEmployees> CustomersEmployees { get; set; }
+        public virtual ICollection<Customer> Customers { get; set; }
 
         public virtual ICollection<Order> Orders { get; set; }
     }

@@ -15,6 +15,7 @@ namespace Admin.Infrastructure.Configuration
         {
             builder.Property(p => p.Name).HasMaxLength(30).IsRequired();
             builder.Property(p => p.UnitPrice).HasPrecision(5, 2);
+            builder.HasMany(p => p.Orders).WithMany(o => o.Products);
         }
     }
 }

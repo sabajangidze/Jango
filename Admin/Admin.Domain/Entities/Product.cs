@@ -25,6 +25,8 @@ namespace Admin.Domain.Entities
 
         public DateTime? DeletedAt { get; set; }
 
-        public virtual ICollection<ProductsOrders> ProductsOrders { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
+        
+        public virtual ICollection<Supplier> Suppliers { get; set; }
     }
 }

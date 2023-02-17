@@ -24,6 +24,6 @@ public class Customer : IEntity<Guid>, IEntityAudit
 
     public DateTime? DeletedAt { get; set; }
 
-    public virtual ICollection<CustomersEmployees> CustomersEmployees { get; set; } 
+    public virtual ICollection<Employee> Employees { get; set; } 
     public virtual ICollection<Order> Orders { get; set; } 
 }
