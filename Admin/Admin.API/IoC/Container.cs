@@ -1,4 +1,6 @@
-﻿using Admin.Infrastructure;
+﻿using Admin.Domain.Abstractions;
+using Admin.Infrastructure;
+using Admin.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
@@ -19,5 +21,10 @@ public static class Container
             options.UseSqlServer(configuration.GetConnectionString("ConnectionString"))
                    .ConfigureWarnings(warnings => warnings.Ignore(CoreEventId.LazyLoadOnDisposedContextWarning)).EnableSensitiveDataLogging();
         });
+
+        services.AddScoped<IUnitOfWork>(ctx => new UnitOfWork(ctx.GetRequiredService<ApplicationDbContext>()));
+
+        services.AddScoped<IActionTransactionHelper, ActionTransactionHelper>();
+
     }
 }
