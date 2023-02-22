@@ -3,11 +3,22 @@
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Admin.Domain\Admin.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="CustomersAggregate\Queries\" />
+    <Folder Include="EmployeeAggregate\Queries\" />
+    <Folder Include="OrderAggregate\Queries\" />
+    <Folder Include="ProductAggregate\Queries\" />
+    <Folder Include="SupplierAggregate\Queries\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.0.0" />
   </ItemGroup>
 
 </Project>

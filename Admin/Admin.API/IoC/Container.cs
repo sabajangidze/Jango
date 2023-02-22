@@ -1,8 +1,11 @@
-﻿using Admin.Domain.Abstractions;
+﻿using Admin.API.Filters;
+using Admin.Domain.Abstractions;
 using Admin.Infrastructure;
 using Admin.Infrastructure.Repositories;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using System.Reflection;
 
 namespace Admin.IoC;
 
@@ -11,9 +14,10 @@ public static class Container
     public static void Setup(IServiceCollection services, IConfiguration configuration)
     {
         AddDbContext(services, configuration);
+        AddMediatr(services);
     }
 
-    public static void AddDbContext(IServiceCollection services, IConfiguration configuration)
+    private static void AddDbContext(IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<ApplicationDbContext>(options =>
         {
@@ -23,8 +27,12 @@ public static class Container
         });
 
         services.AddScoped<IUnitOfWork>(ctx => new UnitOfWork(ctx.GetRequiredService<ApplicationDbContext>()));
-
         services.AddScoped<IActionTransactionHelper, ActionTransactionHelper>();
+        services.AddScoped<UnitOfWorkFilterAttribute>();
+    }
 
+    private static void AddMediatr(IServiceCollection services)
+    {
+        services.AddMediatR(x => x.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
     }
 }
