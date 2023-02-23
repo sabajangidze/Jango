@@ -1,6 +1,4 @@
-﻿using Admin.Application.EmployeeAggregate.Commands;
-using Admin.Application.OrderAggregate.Commands;
-using MediatR;
+﻿using MediatR;
 
 namespace Admin.Application.CustomersAggregate.Commands;
 

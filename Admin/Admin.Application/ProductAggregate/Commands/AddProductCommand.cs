@@ -9,5 +9,5 @@ public record AddProductCommand(
     decimal UnitPrice,
     int UnitsInStock,
     double Weight,
-    ICollection<AddOrderCommand> Orders,
-    ICollection<AddSupplierCommand> Suppliers) : IRequest<Unit>;
+    IEnumerable<AddOrderCommand> Orders,
+    IEnumerable<AddSupplierCommand> Suppliers) : IRequest<Unit>;

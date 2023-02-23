@@ -9,4 +9,5 @@ public record AddSupplierCommand(
     string City,
     string Street,
     string Phone,
-    ICollection<AddProductCommand> Products) : IRequest<Unit>;
+    IEnumerable<AddProductCommand> Products) : IRequest<Unit>;
+

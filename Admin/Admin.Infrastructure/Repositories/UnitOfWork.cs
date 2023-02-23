@@ -1,7 +1,6 @@
 ﻿using Admin.Domain.Abstractions;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
-using System.Data.Common;
 
 namespace Admin.Infrastructure.Repositories;
 
@@ -37,7 +36,7 @@ public class UnitOfWork : IUnitOfWork
         set.Attach(entity);
     }
 
-    void IUnitOfWork.Remove<T>(T entity)
+    void IUnitOfWork.Remove<T>(T entity) where T : class, IEntity<Guid>, IEntityAudit
     {
         var set = _context.Set<T>();
         set.Remove(entity);

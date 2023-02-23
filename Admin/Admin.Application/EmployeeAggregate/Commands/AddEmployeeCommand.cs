@@ -13,5 +13,5 @@ public record AddEmployeeCommand(
     DateTime HireDate,
     DateTime BirthDate,
     decimal Salary,
-    ICollection<AddCustomerCommand> Customers,
-    ICollection<AddOrderCommand> Orders) : IRequest<Unit>;
+    IEnumerable<AddCustomerCommand> Customers,
+    IEnumerable<AddOrderCommand> Orders) : IRequest<Unit>;

@@ -10,4 +10,4 @@ public record AddOrderCommand(
     string Phone,
     string Street,
     string City,
-    ICollection<AddProductCommand> Products) : IRequest<Unit>;
+    IEnumerable<AddProductCommand> Products) : IRequest<Guid>;
