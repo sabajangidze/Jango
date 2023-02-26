@@ -3,6 +3,7 @@ using Admin.Domain.Abstractions;
 using Admin.Infrastructure;
 using Admin.Infrastructure.Repositories;
 using MediatR;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using System.Reflection;
@@ -29,6 +30,8 @@ public static class Container
         services.AddScoped<IUnitOfWork>(ctx => new UnitOfWork(ctx.GetRequiredService<ApplicationDbContext>()));
         services.AddScoped<IActionTransactionHelper, ActionTransactionHelper>();
         services.AddScoped<UnitOfWorkFilterAttribute>();
+        services.AddSingleton<DapperContext>();
+        services.AddScoped<IDapperRepository, DapperRepository>();
     }
 
     private static void AddMediatr(IServiceCollection services)

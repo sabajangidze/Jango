@@ -36,7 +36,7 @@ public class UnitOfWork : IUnitOfWork
         set.Attach(entity);
     }
 
-    void IUnitOfWork.Remove<T>(T entity) where T : class, IEntity<Guid>, IEntityAudit
+    public void Remove<T>(T entity) where T : class, IEntity<Guid>, IEntityAudit
     {
         var set = _context.Set<T>();
         set.Remove(entity);

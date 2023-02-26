@@ -47,6 +47,9 @@ namespace Admin.Infrastructure.Migrations
                         .HasMaxLength(25)
                         .HasColumnType("nvarchar(25)");
 
+                    b.Property<Guid?>("EmployeeId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(30)
@@ -71,6 +74,8 @@ namespace Admin.Infrastructure.Migrations
                         .HasColumnType("nvarchar(25)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
 
                     b.ToTable("Customers");
                 });
@@ -254,21 +259,6 @@ namespace Admin.Infrastructure.Migrations
                     b.ToTable("Supplier");
                 });
 
-            modelBuilder.Entity("CustomerEmployee", b =>
-                {
-                    b.Property<Guid>("CustomersId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("EmployeesId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("CustomersId", "EmployeesId");
-
-                    b.HasIndex("EmployeesId");
-
-                    b.ToTable("CustomerEmployee");
-                });
-
             modelBuilder.Entity("OrderProduct", b =>
                 {
                     b.Property<Guid>("OrdersId")
@@ -299,6 +289,15 @@ namespace Admin.Infrastructure.Migrations
                     b.ToTable("ProductSupplier");
                 });
 
+            modelBuilder.Entity("Admin.Domain.Entities.Customer", b =>
+                {
+                    b.HasOne("Admin.Domain.Entities.Employee", "Employee")
+                        .WithMany("Customers")
+                        .HasForeignKey("EmployeeId");
+
+                    b.Navigation("Employee");
+                });
+
             modelBuilder.Entity("Admin.Domain.Entities.Order", b =>
                 {
                     b.HasOne("Admin.Domain.Entities.Customer", "Customer")
@@ -316,21 +315,6 @@ namespace Admin.Infrastructure.Migrations
                     b.Navigation("Customer");
 
                     b.Navigation("Employee");
-                });
-
-            modelBuilder.Entity("CustomerEmployee", b =>
-                {
-                    b.HasOne("Admin.Domain.Entities.Customer", null)
-                        .WithMany()
-                        .HasForeignKey("CustomersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Admin.Domain.Entities.Employee", null)
-                        .WithMany()
-                        .HasForeignKey("EmployeesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("OrderProduct", b =>
@@ -370,6 +354,8 @@ namespace Admin.Infrastructure.Migrations
 
             modelBuilder.Entity("Admin.Domain.Entities.Employee", b =>
                 {
+                    b.Navigation("Customers");
+
                     b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618

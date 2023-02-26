@@ -12,13 +12,9 @@ public interface IUnitOfWork : IDisposable
 
     void Update<T>(T entity) where T : class, IEntity<Guid>, IEntityAudit;
 
-    void Remove<T>(T entity) where T : class, IEntity<Guid>, IEntityAudit;
-
     void Attach<T>(T entity) where T : class, IEntity<Guid>, IEntityAudit;
 
-    IQueryable<T> Query<T>() where T : class, IEntity<Guid>, IEntityAudit;
-
-    Task<T> GetById<T>(Guid id) where T : class, IEntity<Guid>, IEntityAudit;
+    void Remove<T>(T entity) where T : class, IEntity<Guid>, IEntityAudit;
 
     void Commit();
 

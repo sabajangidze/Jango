@@ -10,8 +10,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="CustomersAggregate\Queries\" />
-    <Folder Include="EmployeeAggregate\Queries\" />
     <Folder Include="OrderAggregate\Queries\" />
     <Folder Include="ProductAggregate\Queries\" />
     <Folder Include="SupplierAggregate\Queries\" />

@@ -6,31 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Admin.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Customers",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
-                    Phone = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
-                    Street = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
-                    City = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Customers", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Employees",
                 columns: table => new
@@ -91,25 +71,51 @@ namespace Admin.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CustomerEmployee",
+                name: "Customers",
                 columns: table => new
                 {
-                    CustomersId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    EmployeesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
+                    Street = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
+                    City = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    EmployeeId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CustomerEmployee", x => new { x.CustomersId, x.EmployeesId });
+                    table.PrimaryKey("PK_Customers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CustomerEmployee_Customers_CustomersId",
-                        column: x => x.CustomersId,
-                        principalTable: "Customers",
+                        name: "FK_Customers_Employees_EmployeeId",
+                        column: x => x.EmployeeId,
+                        principalTable: "Employees",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProductSupplier",
+                columns: table => new
+                {
+                    ProductsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SuppliersId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductSupplier", x => new { x.ProductsId, x.SuppliersId });
+                    table.ForeignKey(
+                        name: "FK_ProductSupplier_Products_ProductsId",
+                        column: x => x.ProductsId,
+                        principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CustomerEmployee_Employees_EmployeesId",
-                        column: x => x.EmployeesId,
-                        principalTable: "Employees",
+                        name: "FK_ProductSupplier_Supplier_SuppliersId",
+                        column: x => x.SuppliersId,
+                        principalTable: "Supplier",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -147,30 +153,6 @@ namespace Admin.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductSupplier",
-                columns: table => new
-                {
-                    ProductsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SuppliersId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProductSupplier", x => new { x.ProductsId, x.SuppliersId });
-                    table.ForeignKey(
-                        name: "FK_ProductSupplier_Products_ProductsId",
-                        column: x => x.ProductsId,
-                        principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ProductSupplier_Supplier_SuppliersId",
-                        column: x => x.SuppliersId,
-                        principalTable: "Supplier",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "OrderProduct",
                 columns: table => new
                 {
@@ -195,9 +177,9 @@ namespace Admin.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CustomerEmployee_EmployeesId",
-                table: "CustomerEmployee",
-                column: "EmployeesId");
+                name: "IX_Customers_EmployeeId",
+                table: "Customers",
+                column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderProduct_ProductsId",
@@ -223,9 +205,6 @@ namespace Admin.Infrastructure.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "CustomerEmployee");
-
             migrationBuilder.DropTable(
                 name: "OrderProduct");
 

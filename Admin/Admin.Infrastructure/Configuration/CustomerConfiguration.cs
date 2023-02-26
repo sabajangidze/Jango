@@ -14,7 +14,7 @@ namespace Admin.Infrastructure.Configuration
             builder.Property(c => c.Street).HasMaxLength(25).IsRequired();
             builder.Property(c => c.City).HasMaxLength(25).IsRequired();
             builder.Property(c => c.Phone).HasMaxLength(25).IsRequired();
-            builder.HasMany(c => c.Employees).WithMany(e => e.Customers);
+            builder.HasOne(c => c.Employee).WithMany(e => e.Customers);
         }
     }
 }

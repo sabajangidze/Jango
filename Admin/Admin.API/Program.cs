@@ -1,3 +1,4 @@
+using Admin.API.IoC;
 using Admin.IoC;
 
 namespace Jango.Admin
@@ -24,6 +25,7 @@ namespace Jango.Admin
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
+                DevelopContainers.Setup(app);
             }
 
             app.UseHttpsRedirection();

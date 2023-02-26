@@ -12,10 +12,14 @@ public class AddCustomerCommandHandler : IRequestHandler<AddCustomerCommand, Uni
 
     public async Task<Unit> Handle(AddCustomerCommand request, CancellationToken cancellationToken)
     {
-        Customer customer = new Customer()
+        Customer customer = new Customer
         {
             FirstName = request.FirstName,
             LastName = request.LastName,
+            Email = request.Email,
+            City = request.City,
+            Phone = request.Phone,
+            Street = request.Steet
         };
 
         _unitOfWork.Add<Customer>(customer);
