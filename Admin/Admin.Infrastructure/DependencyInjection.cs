@@ -25,7 +25,7 @@ public static class DependencyInjection
         return services;
     }
 
-    private static void AddPersistence(this IServiceCollection services)
+    public static void AddPersistence(this IServiceCollection services)
     {
         services.AddScoped<IUnitOfWork>(ctx =>
         {
