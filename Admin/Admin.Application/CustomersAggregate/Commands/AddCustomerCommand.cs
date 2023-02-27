@@ -7,5 +7,5 @@ public record AddCustomerCommand(
     string LastName,
     string Email,
     string Phone,
-    string Steet,
+    string Street,
     string City) : IRequest<Unit>;

@@ -4,6 +4,7 @@ using Admin.Application.CustomersAggregate.Queries;
 using Admin.Application.Models;
 using Admin.Domain.Abstractions;
 using Admin.Domain.Entities;
+using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,10 +16,12 @@ public class CustomerController : ControllerBase
 {
     private readonly ISender _sender;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IMapper _mapper;
 
-    public CustomerController(ISender sender, IUnitOfWork unitOfWork)
+    public CustomerController(ISender sender, IUnitOfWork unitOfWork, IMapper mapper)
     {
         _sender = sender;
+        _mapper = mapper;
         _unitOfWork = unitOfWork;   
     }
 
@@ -27,15 +30,16 @@ public class CustomerController : ControllerBase
     public async Task<ActionResult> CreateCustomer([FromBody]AddCustomerCommand customer)
     {
         //var result = await _sender.Send(customer);
-        Customer customerEntity = new Customer
-        {
-            FirstName = customer.FirstName,
-            LastName = customer.LastName,
-            Email = customer.Email,
-            City = customer.City,
-            Phone = customer.Phone,
-            Street = customer.Steet
-        };
+        Customer customerEntity = _mapper.Map<Customer>(customer);
+        //Customer customerEntity = new Customer
+        //{
+        //    FirstName = customer.FirstName,
+        //    LastName = customer.LastName,
+        //    Email = customer.Email,
+        //    City = customer.City,
+        //    Phone = customer.Phone,
+        //    Street = customer.Street
+        //};
 
         _unitOfWork.Add(customerEntity);
         _unitOfWork.Commit();

@@ -2,6 +2,7 @@
 using Admin.Domain.Abstractions;
 using Admin.Infrastructure;
 using Admin.Infrastructure.Repositories;
+using Jango.Admin;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +17,7 @@ public static class Container
     {
         AddDbContext(services, configuration);
         AddMediatr(services);
+        AddMapper(services);
     }
 
     private static void AddDbContext(IServiceCollection services, IConfiguration configuration)
@@ -38,5 +40,10 @@ public static class Container
     private static void AddMediatr(IServiceCollection services)
     {
         services.AddMediatR(x => x.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
+    }
+
+    private static void AddMapper(IServiceCollection services)
+    {
+        services.AddAutoMapper(typeof(Program));
     }
 }
