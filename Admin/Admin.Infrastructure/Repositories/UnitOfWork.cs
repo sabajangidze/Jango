@@ -1,17 +1,19 @@
 ﻿using Admin.Domain.Abstractions;
+using Dapper;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
-using System.Data.Common;
 
 namespace Admin.Infrastructure.Repositories;
 
 public class UnitOfWork : IUnitOfWork
 {
     public DbContext _context;
+    public readonly DapperContext _dpContext;
 
-    public UnitOfWork(DbContext context)
+    public UnitOfWork(DbContext context, DapperContext dpContext)
     {
         _context = context;
+        _dpContext = dpContext;
     }
 
     public ITransaction BeginTransaction(IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
@@ -37,7 +39,7 @@ public class UnitOfWork : IUnitOfWork
         set.Attach(entity);
     }
 
-    void IUnitOfWork.Remove<T>(T entity)
+    public void Remove<T>(T entity) where T : class, IEntity<Guid>, IEntityAudit
     {
         var set = _context.Set<T>();
         set.Remove(entity);
@@ -50,16 +52,28 @@ public class UnitOfWork : IUnitOfWork
         _context.Entry(entity).State = EntityState.Modified;
     }
 
-    public IQueryable<T> Query<T>() where T : class, IEntity<Guid>, IEntityAudit
+    public async Task<IEnumerable<T>> Query<T>(string table) where T : class
     {
-        return _context.Set<T>();
+        var query = $"SELECT * FROM {table}";
+
+        using (var connection = _dpContext.CreateConnection())
+        {
+            var results = await connection.QueryAsync<T>(query);
+
+            return results.ToList();
+        }
     }
 
-    public async Task<T> GetById<T>(Guid id) where T : class, IEntity<Guid>, IEntityAudit
+    public async Task<T> GetById<T>(string table, Guid id) where T : class
     {
-        var value = _context.Set<T>();
-        var entity = await value.FirstOrDefaultAsync(x => x.Id == id);
-        return entity;
+        var query = $"SELECT * FROM {table} WHERE Id = @Id";
+
+        using (var connection = _dpContext.CreateConnection())
+        {
+            var result = await connection.QueryFirstOrDefaultAsync<T>(query, new { id });
+
+            return result;
+        }
     }
 
     public void Commit()
