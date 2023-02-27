@@ -1,6 +1,5 @@
 ﻿using Admin.Infrastructure.Data;
 using Admin.Infrastructure;
-using Jango.Admin;
 
 namespace Admin.API.IoC
 {
