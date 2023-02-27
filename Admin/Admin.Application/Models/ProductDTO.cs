@@ -12,7 +12,7 @@ public class ProductDTO
 
     public double Weight { get; set; }
 
-    public ICollection<OrderDTO> Orders { get; set; }
+    public IEnumerable<OrderDTO> Orders { get; set; }
 
-    public ICollection<SupplierDTO> Suppliers { get; set; }
+    public IEnumerable<SupplierDTO> Suppliers { get; set; }
 }

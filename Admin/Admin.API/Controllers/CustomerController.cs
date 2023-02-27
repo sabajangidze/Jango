@@ -14,13 +14,11 @@ namespace Admin.API.Controllers;
 public class CustomerController : ControllerBase
 {
     private readonly ISender _sender;
-    private readonly IDapperRepository _repo;
     private readonly IUnitOfWork _unitOfWork;
 
-    public CustomerController(ISender sender, IDapperRepository dapperRepository, IUnitOfWork unitOfWork)
+    public CustomerController(ISender sender, IUnitOfWork unitOfWork)
     {
         _sender = sender;
-        _repo = dapperRepository;
         _unitOfWork = unitOfWork;   
     }
 
@@ -50,7 +48,7 @@ public class CustomerController : ControllerBase
     {
         //var result = await _sender.Send(new GetCustomersQuery());
 
-        var customers = await _repo.Query<CustomerDTO>("Customers");
+        var customers = await _unitOfWork.Query<CustomerDTO>("Customers");
 
         return Ok(customers);
     }
@@ -58,7 +56,7 @@ public class CustomerController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult> GetCustomerById(Guid id)
     {
-        var customer = await _repo.GetById<CustomerDTO>("Customers", id);
+        var customer = await _unitOfWork.GetById<CustomerDTO>("Customers", id);
 
         return Ok(customer);
     }

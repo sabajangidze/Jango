@@ -14,7 +14,7 @@ public class CustomerDTO
 
     public string City { get; set; }
 
-    public ICollection<EmployeeDTO> Employees { get; set; }
+    public IEnumerable<EmployeeDTO> Employees { get; set; }
 
-    public ICollection<OrderDTO> Orders { get; set; }
+    public IEnumerable<OrderDTO> Orders { get; set; }
 }

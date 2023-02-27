@@ -20,7 +20,7 @@ public class EmployeeDTO
 
     public decimal Salary { get; set; }
 
-    public ICollection<CustomerDTO> Customers { get; set; }
+    public IEnumerable<CustomerDTO> Customers { get; set; }
 
-    public ICollection<OrderDTO> Orders { get; set; }
+    public IEnumerable<OrderDTO> Orders { get; set; }
 }

@@ -7,13 +7,13 @@ namespace Admin.Application.EmployeeAggregate.Queries;
 
 public class GetEmployeeHandler : IRequestHandler<GetEmployeeQuery, IEnumerable<EmployeeDTO>>
 {
-    private readonly IDapperRepository _dapperRepo;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public GetEmployeeHandler(IDapperRepository dapperRepo) => _dapperRepo = dapperRepo;
+    public GetEmployeeHandler(IUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
 
     public async Task<IEnumerable<EmployeeDTO>> Handle(GetEmployeeQuery request, CancellationToken cancellationToken)
     {
-        var employees = await _dapperRepo.Query<EmployeeDTO>("Employees");
+        var employees = await _unitOfWork.Query<EmployeeDTO>("Employees");
 
         return employees;
     }

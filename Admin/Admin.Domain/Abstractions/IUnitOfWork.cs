@@ -16,6 +16,10 @@ public interface IUnitOfWork : IDisposable
 
     void Remove<T>(T entity) where T : class, IEntity<Guid>, IEntityAudit;
 
+    Task<IEnumerable<T>> Query<T>(string table) where T : class;
+
+    Task<T> GetById<T>(string table, Guid id) where T : class;
+
     void Commit();
 
     Task CommitAsync();

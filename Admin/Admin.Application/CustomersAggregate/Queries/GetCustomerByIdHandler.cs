@@ -6,13 +6,13 @@ namespace Admin.Application.CustomersAggregate.Queries;
 
 public class GetCustomerByIdHandler : IRequestHandler<GetCustomerByIdQuery, CustomerDTO>
 {
-    private readonly IDapperRepository _dapperRepo;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public GetCustomerByIdHandler(IDapperRepository dapperRepo) => _dapperRepo = dapperRepo;
+    public GetCustomerByIdHandler(IUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
 
     public async Task<CustomerDTO> Handle(GetCustomerByIdQuery request, CancellationToken cancellationToken)
     {
-        var customer = await _dapperRepo.GetById<CustomerDTO>("Customers", request.Id);
+        var customer = await _unitOfWork.GetById<CustomerDTO>("Customers", request.Id);
 
         return customer;
     }

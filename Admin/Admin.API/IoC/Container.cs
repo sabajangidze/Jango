@@ -27,11 +27,12 @@ public static class Container
                    .ConfigureWarnings(warnings => warnings.Ignore(CoreEventId.LazyLoadOnDisposedContextWarning)).EnableSensitiveDataLogging();
         });
 
-        services.AddScoped<IUnitOfWork>(ctx => new UnitOfWork(ctx.GetRequiredService<ApplicationDbContext>()));
+        services.AddScoped<IUnitOfWork>(ctx => new UnitOfWork(
+            ctx.GetRequiredService<ApplicationDbContext>(),
+            ctx.GetRequiredService<DapperContext>()));
         services.AddScoped<IActionTransactionHelper, ActionTransactionHelper>();
         services.AddScoped<UnitOfWorkFilterAttribute>();
         services.AddSingleton<DapperContext>();
-        services.AddScoped<IDapperRepository, DapperRepository>();
     }
 
     private static void AddMediatr(IServiceCollection services)

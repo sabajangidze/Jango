@@ -14,5 +14,5 @@ public class SupplierDTO
 
     public string Phone { get; set; }
 
-    public ICollection<ProductDTO> Products { get; set; }
+    public IEnumerable<ProductDTO> Products { get; set; }
 }

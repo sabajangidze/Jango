@@ -11,19 +11,15 @@ namespace Admin.API.Controllers;
 public class EmployeeController : ControllerBase
 {
     private readonly ISender _sender;
-    private readonly IDapperRepository _repo;
 
-    public EmployeeController(ISender sender, IDapperRepository dapperRepository)
+    public EmployeeController(ISender sender)
     {
         _sender = sender;
-        _repo = dapperRepository;
     }
 
     [HttpGet]
     public async Task<ActionResult> GetEmployees()
     {
-        var employees = await _repo.Query<EmployeeDTO>("Employees");
-
-        return Ok(employees);
+        return Ok();
     }
 }
