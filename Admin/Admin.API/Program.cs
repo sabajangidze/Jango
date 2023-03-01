@@ -13,8 +13,7 @@ public class Program
             builder.Services
                 .AddPresentation()
                 .AddApplication()
-                .AddInfrastructure(builder.Configuration)
-                .AddPersistence();
+                .AddInfrastructure(builder.Configuration);
         }
         
         var app = builder.Build();

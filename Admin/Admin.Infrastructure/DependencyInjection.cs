@@ -21,11 +21,12 @@ public static class DependencyInjection
         });
 
         services.AddScoped<DapperContext>();
+        services.AddPersistence();
 
         return services;
     }
 
-    public static void AddPersistence(this IServiceCollection services)
+    private static void AddPersistence(this IServiceCollection services)
     {
         services.AddScoped<IUnitOfWork>(ctx =>
         {
