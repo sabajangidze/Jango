@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Web.Application.CustomerServices;
+using Web.Application.Models;
 using Web.Domain.Abstractions;
 using Web.Domain.Entities;
 

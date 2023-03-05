@@ -30,16 +30,16 @@ public class CustomerController : ControllerBase
     public async Task<ActionResult> CreateCustomer([FromBody]AddCustomerCommand customer)
     {
         //var result = await _sender.Send(customer);
-        Customer customerEntity = _mapper.Map<Customer>(customer);
-        //Customer customerEntity = new Customer
-        //{
-        //    FirstName = customer.FirstName,
-        //    LastName = customer.LastName,
-        //    Email = customer.Email,
-        //    City = customer.City,
-        //    Phone = customer.Phone,
-        //    Street = customer.Street
-        //};
+        //Customer customerEntity = _mapper.Map<Customer>(customer);
+        Customer customerEntity = new Customer
+        {
+            FirstName = customer.FirstName,
+            LastName = customer.LastName,
+            Email = customer.Email,
+            City = customer.City,
+            Phone = customer.Phone,
+            Street = customer.Street
+        };
 
         _unitOfWork.Add(customerEntity);
         _unitOfWork.Commit();
