@@ -1,3 +1,4 @@
+using Web.Infrastructure;
 
 namespace Web
 {
@@ -6,6 +7,10 @@ namespace Web
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            {
+                builder.Services
+                    .AddInfrastructure(builder.Configuration);
+            }
 
             // Add services to the container.
 
