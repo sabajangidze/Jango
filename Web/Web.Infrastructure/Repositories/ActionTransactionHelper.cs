@@ -3,7 +3,7 @@ using Web.Domain.Abstractions;
 
 namespace Web.Infrastructure.Repositories;
 
-public class ActionTransactionHelper
+public class ActionTransactionHelper : IActionTransactionHelper
 {
     private readonly IUnitOfWork _unitOfWork;
     private ITransaction _transaction;

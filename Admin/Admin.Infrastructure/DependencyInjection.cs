@@ -22,6 +22,8 @@ public static class DependencyInjection
 
         services.AddScoped<DapperContext>();
 
+        services.AddPersistence();
+
         return services;
     }
 

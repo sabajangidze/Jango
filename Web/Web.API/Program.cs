@@ -1,3 +1,5 @@
+using Web.API.IoC;
+using Web.Application;
 using Web.Infrastructure;
 
 namespace Web
@@ -9,13 +11,13 @@ namespace Web
             var builder = WebApplication.CreateBuilder(args);
             {
                 builder.Services
-                    .AddInfrastructure(builder.Configuration);
+                    .AddInfrastructure(builder.Configuration)
+                    .AddApplication();
             }
 
             // Add services to the container.
 
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
@@ -26,6 +28,7 @@ namespace Web
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
+                DevelopContainers.Setup(app);
             }
 
             app.UseHttpsRedirection();

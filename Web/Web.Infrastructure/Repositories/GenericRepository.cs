@@ -9,10 +9,10 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
     private readonly DbContext _context;
     private readonly WebDapperContext _dpContext;
 
-    public GenericRepository(DbContext context, WebDapperContext dpContext)
+    public GenericRepository(WebDbContext context)
     {
-        _context = context;
-        _dpContext = dpContext;
+       _context = context;
+        //_dpContext = dpContext;
     }
 
     public void Add(T entity)
