@@ -36,8 +36,6 @@ public class CustomerController : ControllerBase
             Street = customer.Street
         };
 
-        _unitOfWork.Add(customerEntity);
-        _unitOfWork.Commit();
         await _sender.Send(customer);
 
         return Ok();
