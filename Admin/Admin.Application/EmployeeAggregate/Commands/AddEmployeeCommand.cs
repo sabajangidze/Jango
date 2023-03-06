@@ -12,6 +12,6 @@ public record AddEmployeeCommand(
     string Position,
     DateTime HireDate,
     DateTime BirthDate,
-    decimal Salary,
-    IEnumerable<AddCustomerCommand> Customers,
-    IEnumerable<AddOrderCommand> Orders) : IRequest<Unit>;
+    decimal Salary) : IRequest<Unit>;
+    //IEnumerable<AddCustomerCommand> Customers,
+    //IEnumerable<AddOrderCommand> Orders) : IRequest<Unit>;

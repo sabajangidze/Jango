@@ -2,6 +2,7 @@
 using Admin.Application.CustomersAggregate.Commands;
 using Admin.Application.CustomersAggregate.Queries;
 using Admin.Application.Models;
+using Admin.Application.Utils.Profiles;
 using Admin.Domain.Abstractions;
 using Admin.Domain.Entities;
 using AutoMapper;
@@ -15,34 +16,17 @@ namespace Admin.API.Controllers;
 public class CustomerController : ControllerBase
 {
     private readonly ISender _sender;
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IMapper _mapper;
 
-    public CustomerController(ISender sender, IUnitOfWork unitOfWork, IMapper mapper)
+    public CustomerController(ISender sender, IMapper mapper)
     {
         _sender = sender;
-        _mapper = mapper;
-        _unitOfWork = unitOfWork;   
     }
 
     [HttpPost]
     //[ServiceFilter(typeof(UnitOfWorkFilterAttribute))]
     public async Task<ActionResult> CreateCustomer([FromBody]AddCustomerCommand customer)
     {
-        //var result = await _sender.Send(customer);
-        Customer customerEntity = _mapper.Map<Customer>(customer);
-        //Customer customerEntity = new Customer
-        //{
-        //    FirstName = customer.FirstName,
-        //    LastName = customer.LastName,
-        //    Email = customer.Email,
-        //    City = customer.City,
-        //    Phone = customer.Phone,
-        //    Street = customer.Street
-        //};
-
-        _unitOfWork.Add(customerEntity);
-        _unitOfWork.Commit();
+        await _sender.Send(customer);
 
         return Ok();
     }
@@ -50,9 +34,7 @@ public class CustomerController : ControllerBase
     [HttpGet]
     public async Task<ActionResult> GetCustomers()
     {
-        //var result = await _sender.Send(new GetCustomersQuery());
-
-        var customers = await _unitOfWork.Query<CustomerDTO>("Customers");
+        var customers = await _sender.Send(new GetCustomersQuery());
 
         return Ok(customers);
     }
@@ -60,7 +42,7 @@ public class CustomerController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult> GetCustomerById(Guid id)
     {
-        var customer = await _unitOfWork.GetById<CustomerDTO>("Customers", id);
+        var customer = await _sender.Send(new GetCustomerByIdQuery(id));
 
         return Ok(customer);
     }

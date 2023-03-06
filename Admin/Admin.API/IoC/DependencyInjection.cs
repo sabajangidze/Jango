@@ -1,4 +1,5 @@
 ﻿using Admin.API.Filters;
+using Admin.Application.Utils.Profiles;
 
 namespace Admin.API.IoC;
 
@@ -21,7 +22,7 @@ public static class DependencyInjection
 
     private static void AddMapper(this IServiceCollection services)
     {
-        services.AddAutoMapper(typeof(Program));
+        services.AddAutoMapper(typeof(CustomerProfile));
     }
 
     private static void AddFilterAttributes(this IServiceCollection services)

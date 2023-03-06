@@ -5,11 +5,11 @@ using MediatR;
 
 namespace Admin.Application.EmployeeAggregate.Queries;
 
-public class GetEmployeeHandler : IRequestHandler<GetEmployeeQuery, IEnumerable<EmployeeDTO>>
+public class GetEmployeeQueryHandler : IRequestHandler<GetEmployeeQuery, IEnumerable<EmployeeDTO>>
 {
     private readonly IUnitOfWork _unitOfWork;
 
-    public GetEmployeeHandler(IUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
+    public GetEmployeeQueryHandler(IUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
 
     public async Task<IEnumerable<EmployeeDTO>> Handle(GetEmployeeQuery request, CancellationToken cancellationToken)
     {
