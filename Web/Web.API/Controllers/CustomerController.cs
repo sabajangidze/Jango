@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Plain.RabbitMQ;
 using System.Text.Json.Serialization;
+using Web.API.Models;
 using Web.Application.Models;
 using Web.Application.Services;
 using Web.Domain.Entities;
@@ -31,10 +32,20 @@ namespace Web.API.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddCustomer([FromBody]CustomerDTO customer)
+        public ActionResult AddCustomer([FromBody]AddCustomerModel customer)
         {
             //_publisher.Publish(JsonConvert.SerializeObject(customer), "report.order", null);
-            _customerServices.AddCustomer(customer);
+            var customerDTO = new CustomerDTO 
+            { 
+                FirstName = customer.FirstName,
+                LastName = customer.LastName,
+                Email = customer.Email,
+                Phone = customer.Phone,
+                Street = customer.Street,
+                City = customer.City
+
+            };
+            _customerServices.AddCustomer(customerDTO);
 
             return Ok();
         }
