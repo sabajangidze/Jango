@@ -8,7 +8,7 @@ namespace Web.API.IoC
     {
         public static IServiceCollection AddPresentation(this IServiceCollection services)
         {
-            services.AddRabbitMQ();
+            //services.AddRabbitMQ();
 
             return services;
         }

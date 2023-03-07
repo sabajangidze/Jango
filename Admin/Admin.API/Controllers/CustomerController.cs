@@ -26,16 +26,6 @@ public class CustomerController : ControllerBase
     //[ServiceFilter(typeof(UnitOfWorkFilterAttribute))]
     public async Task<ActionResult> CreateCustomer([FromBody]AddCustomerCommand customer)
     {
-        Customer customerEntity = new Customer
-        {
-            FirstName = customer.FirstName,
-            LastName = customer.LastName,
-            Email = customer.Email,
-            City = customer.City,
-            Phone = customer.Phone,
-            Street = customer.Street
-        };
-
         await _sender.Send(customer);
 
         return Ok();

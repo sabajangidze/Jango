@@ -23,8 +23,6 @@ public static class DependencyInjection
         services.AddScoped<DapperContext>();
         services.AddPersistence();
 
-        services.AddPersistence();
-
         return services;
     }
 

@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Plain.RabbitMQ;
 using System.Text.Json.Serialization;
-using Web.Application.CustomerServices;
 using Web.Application.Models;
+using Web.Application.Services;
 using Web.Domain.Entities;
 
 namespace Web.API.Controllers
@@ -13,21 +13,19 @@ namespace Web.API.Controllers
     [ApiController]
     public class CustomerController : ControllerBase
     {
-        private readonly GetCustomers _service;
-        private readonly AddCustomer _addSer;
-        private readonly IPublisher _publisher;
+        private readonly CustomerServices _customerServices;
+        //private readonly IPublisher _publisher;
 
-        public CustomerController(AddCustomer addSer, IPublisher publisher)
+        public CustomerController(CustomerServices customerServices/*, IPublisher publisher*/)
         {
-            //_service = service;
-            _addSer = addSer;
-            _publisher = publisher;
+            _customerServices = customerServices;
+            //_publisher = publisher;
         }
 
         [HttpGet]
         public async Task<ActionResult> GetCustomers()
         {
-            var customers = await _service.GetCustomersAsync();
+            var customers = await _customerServices.GetCustomers();
 
             return Ok(customers);
         }
@@ -35,8 +33,8 @@ namespace Web.API.Controllers
         [HttpPost]
         public ActionResult AddCustomer([FromBody]CustomerDTO customer)
         {
-            _publisher.Publish(JsonConvert.SerializeObject(customer), "report.order", null);
-            _addSer.Add(customer);
+            //_publisher.Publish(JsonConvert.SerializeObject(customer), "report.order", null);
+            _customerServices.AddCustomer(customer);
 
             return Ok();
         }
