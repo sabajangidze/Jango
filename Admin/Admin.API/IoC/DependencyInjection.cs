@@ -1,5 +1,6 @@
 ﻿using Admin.API.Filters;
 using Admin.Application.Utils.Profiles;
+using MassTransit;
 
 namespace Admin.API.IoC;
 
@@ -14,7 +15,7 @@ public static class DependencyInjection
         services.AddSwaggerGen();
 
         services.AddFilterAttributes();
-        
+        services.AddMassTransit();
         services.AddMapper();
 
         return services;
@@ -28,5 +29,21 @@ public static class DependencyInjection
     private static void AddFilterAttributes(this IServiceCollection services)
     {
         services.AddScoped<UnitOfWorkFilterAttribute>();
+    }
+
+    private static void AddMassTransit(this IServiceCollection services)
+    {
+        services.AddMassTransit(config => {
+
+            config.AddConsumer<Consumer>();
+
+            config.UsingRabbitMq((ctx, cfg) => {
+                cfg.Host("amqp://guest:guest@localhost:5672");
+
+                cfg.ReceiveEndpoint("order-queue", c => {
+                    c.ConfigureConsumer<Consumer>(ctx);
+                });
+            });
+        });
     }
 }

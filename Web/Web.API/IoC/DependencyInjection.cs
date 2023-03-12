@@ -1,5 +1,4 @@
-﻿using Plain.RabbitMQ;
-using RabbitMQ.Client;
+﻿using MassTransit;
 using Web.API.Filters;
 
 namespace Web.API.IoC
@@ -8,7 +7,7 @@ namespace Web.API.IoC
     {
         public static IServiceCollection AddPresentation(this IServiceCollection services)
         {
-            //services.AddRabbitMQ();
+            services.AddMassTransit();
 
             return services;
         }
@@ -18,13 +17,13 @@ namespace Web.API.IoC
             services.AddScoped<UnitOfWorkFilterAttribute>();
         }
 
-        private static void AddRabbitMQ(this IServiceCollection services)
+        private static void AddMassTransit(this IServiceCollection services)
         {
-            services.AddSingleton<IConnectionProvider>(new ConnectionProvider("amqp://guest:guest@localhost:5672"));
-            services.AddScoped<IPublisher>(x => new Publisher(x.GetService<IConnectionProvider>(),
-                "report_exchange",
-                ExchangeType.Topic
-                ));
+            services.AddMassTransit(config => {
+                config.UsingRabbitMq((ctx, cfg) => {
+                    cfg.Host("amqp://guest:guest@localhost:5672");
+                });
+            });
         }
     }
 }
