@@ -29,7 +29,7 @@ class CustomerCreatedConsumer : IConsumer<CustomerDTO>
     public async Task Consume(ConsumeContext<CustomerDTO> context)
     {
         var jsonMessage = JsonConvert.SerializeObject(context.Message);
-        Console.WriteLine($"OrderCreated message: {jsonMessage}");
+        Console.WriteLine($"ConsumerCreated message: {jsonMessage}");
     }
 }
 
