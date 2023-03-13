@@ -1,24 +1,22 @@
-﻿using Admin.Application.CustomersAggregate.Commands;
+﻿using Admin.Application.Models;
+using Admin.Domain.Entities;
 using MassTransit;
-using MediatR;
 using Newtonsoft.Json;
 
-namespace Admin.API
+namespace Admin.API;
+
+public class Consumer : IConsumer<CustomerDTO>
 {
-    public class Consumer : IConsumer<AddCustomerCommand>
+    private readonly ILogger<Consumer> logger;
+
+    public Consumer(ILogger<Consumer> logger)
     {
-        private readonly ISender _sender;
+        this.logger = logger;
+    }
 
-        public Consumer(ISender sender)
-        {
-            _sender = sender;
-        }
-
-        public async Task Consume(ConsumeContext<AddCustomerCommand> context)
-        {
-            var jsonMessage = JsonConvert.SerializeObject(context.Message);
-
-            await _sender.Send(jsonMessage);
-        }
+    public async Task Consume(ConsumeContext<CustomerDTO> context)
+    {
+        await Console.Out.WriteLineAsync(context.Message.FirstName);
+        logger.LogInformation($"Got new message {context.Message.FirstName}");
     }
 }

@@ -31,7 +31,7 @@ public static class DependencyInjection
         services.AddScoped<UnitOfWorkFilterAttribute>();
     }
 
-    private static void AddMassTransit(this IServiceCollection services)
+    private async static void AddMassTransit(this IServiceCollection services)
     {
         services.AddMassTransit(config => {
 
