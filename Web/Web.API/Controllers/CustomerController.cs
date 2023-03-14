@@ -1,4 +1,5 @@
-﻿using MassTransit;
+﻿using Jango.IntegrationEvent;
+using MassTransit;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json.Serialization;
@@ -45,7 +46,17 @@ namespace Web.API.Controllers
 
             _customerServices.AddCustomer(customerDTO);
 
-            await _publishEndpoint.Publish<CustomerDTO>(customerDTO);
+            CustomerEvent customerEvent = new CustomerEvent
+            {
+                FirstName = customerDTO.FirstName,
+                LastName = customerDTO.LastName,
+                Email = customerDTO.Email,
+                Phone = customerDTO.Phone,
+                Street = customerDTO.Street,
+                City = customerDTO.City
+            };
+
+            await _publishEndpoint.Publish<CustomerEvent>(customerEvent);
 
             return Ok();
         }

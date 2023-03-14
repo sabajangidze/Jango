@@ -1,4 +1,5 @@
 ﻿using Admin.API.Filters;
+using Admin.Application.CustomersAggregate.Commands;
 using Admin.Application.Utils.Profiles;
 using MassTransit;
 
@@ -15,7 +16,8 @@ public static class DependencyInjection
         services.AddSwaggerGen();
 
         services.AddFilterAttributes();
-        services.AddMassTransit();
+        AddMassTransit();
+        services.AddMassTransits();
         services.AddMapper();
 
         return services;
@@ -31,8 +33,23 @@ public static class DependencyInjection
         services.AddScoped<UnitOfWorkFilterAttribute>();
     }
 
-    private async static void AddMassTransit(this IServiceCollection services)
+    private async static void AddMassTransit()
     {
+        var busControl = Bus.Factory.CreateUsingRabbitMq(cfg =>
+        {
+            cfg.ReceiveEndpoint("customer-created-event", e =>
+            {
+                //e.Consumer<Consumer>();
+            });
+        });
+
+        await busControl.StartAsync(new CancellationToken());
+    }
+
+    private async static void AddMassTransits(this IServiceCollection services)
+    {
+        services.AddControllers();
+
         services.AddMassTransit(config => {
 
             config.AddConsumer<Consumer>();
@@ -40,7 +57,7 @@ public static class DependencyInjection
             config.UsingRabbitMq((ctx, cfg) => {
                 cfg.Host("amqp://guest:guest@localhost:5672");
 
-                cfg.ReceiveEndpoint("order-queue", c => {
+                cfg.ReceiveEndpoint("customer-created-event", c => {
                     c.ConfigureConsumer<Consumer>(ctx);
                 });
             });

@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Jango.IntegrationEvent\Jango.IntegrationEvent.csproj" />
     <ProjectReference Include="..\Web.Application\Web.Application.csproj" />
     <ProjectReference Include="..\Web.Infrastructure\Web.Infrastructure.csproj" />
   </ItemGroup>

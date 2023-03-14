@@ -37,7 +37,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateway", "ApiGateway", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OcelotApiGateway", "OcelotApiGateway\OcelotApiGateway.csproj", "{FDE3E0DD-E3BD-4B86-98C9-6D6D8BB62A69}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Consumer", "Consumer\Consumer.csproj", "{EF6BBA6D-3E52-420E-A60D-6582EE18942E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Consumer", "Consumer\Consumer.csproj", "{EF6BBA6D-3E52-420E-A60D-6582EE18942E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jango.IntegrationEvent", "Jango.IntegrationEvent\Jango.IntegrationEvent.csproj", "{C708FAAD-0760-497F-83A6-8E1C428591D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -101,6 +103,10 @@ Global
 		{EF6BBA6D-3E52-420E-A60D-6582EE18942E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF6BBA6D-3E52-420E-A60D-6582EE18942E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF6BBA6D-3E52-420E-A60D-6582EE18942E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C708FAAD-0760-497F-83A6-8E1C428591D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C708FAAD-0760-497F-83A6-8E1C428591D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C708FAAD-0760-497F-83A6-8E1C428591D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C708FAAD-0760-497F-83A6-8E1C428591D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
