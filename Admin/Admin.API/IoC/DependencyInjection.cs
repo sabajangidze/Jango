@@ -16,7 +16,6 @@ public static class DependencyInjection
         services.AddSwaggerGen();
 
         services.AddFilterAttributes();
-        AddMassTransit();
         services.AddMassTransits();
         services.AddMapper();
 
@@ -31,19 +30,6 @@ public static class DependencyInjection
     private static void AddFilterAttributes(this IServiceCollection services)
     {
         services.AddScoped<UnitOfWorkFilterAttribute>();
-    }
-
-    private async static void AddMassTransit()
-    {
-        var busControl = Bus.Factory.CreateUsingRabbitMq(cfg =>
-        {
-            cfg.ReceiveEndpoint("customer-created-event", e =>
-            {
-                //e.Consumer<Consumer>();
-            });
-        });
-
-        await busControl.StartAsync(new CancellationToken());
     }
 
     private async static void AddMassTransits(this IServiceCollection services)
