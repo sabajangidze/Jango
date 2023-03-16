@@ -48,4 +48,21 @@ public class CustomerServices
 
         return customerDTOs.ToList();
     }
+
+    public async Task<CustomerDTO> GetCustomer(Guid id)
+    {
+        var customer = await _repo.GetByIdAsync("Customers", id);
+
+        CustomerDTO customerDTO = new CustomerDTO
+        {
+            FirstName = customer.FirstName,
+            LastName = customer.LastName,
+            Email = customer.Email,
+            Phone = customer.Phone,
+            Street = customer.Street,
+            City = customer.City
+        };
+
+        return customerDTO;
+    }
 }

@@ -1,5 +1,7 @@
 ﻿using Dapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
+using Newtonsoft.Json;
 using Web.Domain.Abstractions;
 
 namespace Web.Infrastructure.Repositories;
@@ -8,11 +10,44 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
 {
     private readonly DbContext _context;
     private readonly WebDapperContext _dpContext;
+    private readonly IDistributedCache _distributedCache;
 
-    public GenericRepository(WebDbContext context)
+    public GenericRepository(WebDbContext context, WebDapperContext dpContext, IDistributedCache distributedCache)
     {
+        _distributedCache = distributedCache;
        _context = context;
-        //_dpContext = dpContext;
+       _dpContext = dpContext;
+    }
+
+    public async Task<T> GetByIdAsync(string table, Guid id, CancellationToken cancellationToken = default)
+    {
+        string key = $"member-{id}";
+
+        string? cachedMember = await _distributedCache.GetStringAsync(
+            key,
+            cancellationToken);
+        T member;
+
+        if (string.IsNullOrEmpty(cachedMember))
+        {
+            member = await GetById(table, id);
+
+            if (member is null)
+            {
+                return member;
+            }
+
+            await _distributedCache.SetStringAsync(
+                key,
+                JsonConvert.SerializeObject(member),
+                cancellationToken);
+
+            return member;
+        }
+
+        member = JsonConvert.DeserializeObject<T>(cachedMember);
+
+        return member;
     }
 
     public void Add(T entity)
@@ -59,9 +94,9 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         }
     }
 
-    public async Task<T> GetById<T>(string table, Guid id) where T : class, IEntity<Guid>
+    public async Task<T> GetById(string table, Guid id)
     {
-        var query = $"SELECT * FROM {table} WHERE Id = @Id";
+        var query = $"SELECT * FROM {table} WHERE {table}.\"Id\" = @Id";
 
         using (var connection = _dpContext.CreateConnection())
         {
