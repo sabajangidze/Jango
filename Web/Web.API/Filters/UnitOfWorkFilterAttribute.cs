@@ -1,4 +1,4 @@
-﻿using System.Web.Mvc;
+﻿using Microsoft.AspNetCore.Mvc.Filters;
 using Web.Domain.Abstractions;
 
 namespace Web.API.Filters;
