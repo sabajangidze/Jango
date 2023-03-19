@@ -1,5 +1,5 @@
 ﻿using Admin.Domain.Abstractions;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Admin.Infrastructure.Repositories;
 
