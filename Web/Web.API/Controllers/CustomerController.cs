@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Plain.RabbitMQ;
 using System.Text.Json.Serialization;
+using Web.API.Filters;
 using Web.API.Models;
 using Web.Application.Models;
 using Web.Application.Services;
@@ -32,6 +33,7 @@ namespace Web.API.Controllers
         }
 
         [HttpPost]
+        [ServiceFilter(typeof(UnitOfWorkFilterAttribute))]
         public ActionResult AddCustomer([FromBody]AddCustomerModel customer)
         {
             //_publisher.Publish(JsonConvert.SerializeObject(customer), "report.order", null);
