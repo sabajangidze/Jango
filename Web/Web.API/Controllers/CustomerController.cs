@@ -9,6 +9,8 @@ using Web.Application.Models;
 using Web.Application.Services;
 using Web.Domain.Entities;
 
+//TODO აქ ფაბლიშერებს რატო არ იყენებ?
+//TODO customer-ის დამატების მერე უნდა გეწეროს დაფაბლიშება
 namespace Web.API.Controllers
 {
     [Route("api/[controller]")]

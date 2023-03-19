@@ -8,6 +8,7 @@ namespace Web.API.IoC
     {
         public static IServiceCollection AddPresentation(this IServiceCollection services)
         {
+            //TODO ეს რატო გაქ დაკომენტარებული?
             //services.AddRabbitMQ();
 
             return services;
