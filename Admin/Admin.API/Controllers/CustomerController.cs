@@ -23,7 +23,7 @@ public class CustomerController : ControllerBase
     }
 
     [HttpPost]
-    //[ServiceFilter(typeof(UnitOfWorkFilterAttribute))]
+    [ServiceFilter(typeof(UnitOfWorkFilterAttribute))]
     public async Task<ActionResult> CreateCustomer([FromBody]AddCustomerCommand customer)
     {
         await _sender.Send(customer);

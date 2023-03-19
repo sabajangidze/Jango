@@ -1,4 +1,5 @@
-﻿using Admin.Application.CustomersAggregate.Commands;
+﻿using Admin.API.Filters;
+using Admin.Application.CustomersAggregate.Commands;
 using Admin.Application.EmployeeAggregate.Commands;
 using Admin.Application.EmployeeAggregate.Queries;
 using Admin.Application.Models;
@@ -23,7 +24,7 @@ public class EmployeeController : ControllerBase
     }
 
     [HttpPost]
-    //[ServiceFilter(typeof(UnitOfWorkFilterAttribute))]
+    [ServiceFilter(typeof(UnitOfWorkFilterAttribute))]
     public async Task<ActionResult> CreateEmployee([FromBody]AddEmployeeCommand employee)
     {
         var result = await _sender.Send(employee);

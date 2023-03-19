@@ -1,5 +1,6 @@
 ﻿namespace Web.Domain.Abstractions;
 
+//TODO ჯენერიკის გამოყენება რატო დაგჭირდა?
 public interface IGenericRepository<T> where T : class
 {
     Task<T> GetByIdAsync(string table, Guid id, CancellationToken cancellationToken = default);
