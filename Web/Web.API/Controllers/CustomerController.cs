@@ -1,16 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Jango.IntegrationEvent;
+using MassTransit;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using Plain.RabbitMQ;
 using System.Text.Json.Serialization;
-using Web.API.Filters;
 using Web.API.Models;
 using Web.Application.Models;
 using Web.Application.Services;
 using Web.Domain.Entities;
 
-//TODO აქ ფაბლიშერებს რატო არ იყენებ?
-//TODO customer-ის დამატების მერე უნდა გეწეროს დაფაბლიშება
 namespace Web.API.Controllers
 {
     [Route("api/[controller]")]
@@ -18,12 +15,12 @@ namespace Web.API.Controllers
     public class CustomerController : ControllerBase
     {
         private readonly CustomerServices _customerServices;
-        //private readonly IPublisher _publisher;
+        private readonly IPublishEndpoint _publishEndpoint;
 
-        public CustomerController(CustomerServices customerServices/*, IPublisher publisher*/)
+        public CustomerController(CustomerServices customerServices, IPublishEndpoint publishEndpoint)
         {
             _customerServices = customerServices;
-            //_publisher = publisher;
+            _publishEndpoint = publishEndpoint;
         }
 
         [HttpGet]
@@ -35,10 +32,8 @@ namespace Web.API.Controllers
         }
 
         [HttpPost]
-        [ServiceFilter(typeof(UnitOfWorkFilterAttribute))]
-        public ActionResult AddCustomer([FromBody]AddCustomerModel customer)
+        public async Task<ActionResult> AddCustomer([FromBody]AddCustomerModel customer)
         {
-            //_publisher.Publish(JsonConvert.SerializeObject(customer), "report.order", null);
             var customerDTO = new CustomerDTO 
             { 
                 FirstName = customer.FirstName,
@@ -47,9 +42,21 @@ namespace Web.API.Controllers
                 Phone = customer.Phone,
                 Street = customer.Street,
                 City = customer.City
-
             };
+
             _customerServices.AddCustomer(customerDTO);
+
+            CustomerEvent customerEvent = new CustomerEvent
+            {
+                FirstName = customerDTO.FirstName,
+                LastName = customerDTO.LastName,
+                Email = customerDTO.Email,
+                Phone = customerDTO.Phone,
+                Street = customerDTO.Street,
+                City = customerDTO.City
+            };
+
+            await _publishEndpoint.Publish<CustomerEvent>(customerEvent);
 
             return Ok();
         }
