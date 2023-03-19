@@ -1,7 +1,7 @@
-﻿using Admin.Domain.Abstractions;
-using Microsoft.AspNetCore.Mvc.Filters;
+﻿using Microsoft.AspNetCore.Mvc.Filters;
+using Web.Domain.Abstractions;
 
-namespace Admin.API.Filters;
+namespace Web.API.Filters;
 
 public class UnitOfWorkFilterAttribute : ActionFilterAttribute
 {

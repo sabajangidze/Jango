@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace Admin.Domain.Abstractions;
+namespace Web.Domain.Abstractions;
 
-public  interface IActionTransactionHelper
+public interface IActionTransactionHelper
 {
     void BeginTransaction();
 
