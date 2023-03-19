@@ -11,7 +11,7 @@ namespace Web
             var builder = WebApplication.CreateBuilder(args);
             {
                 builder.Services
-                    .AddPresentation()
+                    .AddPresentation(builder.Configuration)
                     .AddInfrastructure(builder.Configuration)
                     .AddApplication();
             }

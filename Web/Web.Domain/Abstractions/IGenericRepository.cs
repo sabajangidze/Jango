@@ -3,6 +3,8 @@
 //TODO ჯენერიკის გამოყენება რატო დაგჭირდა?
 public interface IGenericRepository<T> where T : class
 {
+    Task<T> GetByIdAsync(string table, Guid id, CancellationToken cancellationToken = default);
+
     void Add(T entity);
 
     Task AddAsync(T entity);
@@ -15,5 +17,5 @@ public interface IGenericRepository<T> where T : class
 
     Task<IEnumerable<T>> Query(string table);
 
-    Task<T> GetById<T>(string table, Guid id) where T : class, IEntity<Guid>;
+    Task<T> GetById(string table, Guid id);
 }
