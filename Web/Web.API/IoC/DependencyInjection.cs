@@ -37,7 +37,6 @@ namespace Web.API.IoC
 
                 redisOptions.Configuration = connection;
             });
-            services.AddSingleton<IRedisCacheService, RedisCacheService>();
         }
     }
 }

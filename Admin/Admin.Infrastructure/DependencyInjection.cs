@@ -21,6 +21,7 @@ public static class DependencyInjection
         });
 
         services.AddScoped<DapperContext>();
+        services.AddSingleton<IRedisCacheService, RedisCacheService>();
         services.AddPersistence();
 
         return services;
@@ -32,10 +33,10 @@ public static class DependencyInjection
         {
             var efCoreDbContext = ctx.GetRequiredService<ApplicationDbContext>();
             var dapperDbContext = ctx.GetRequiredService<DapperContext>();
+            var redisCacheService = ctx.GetRequiredService<RedisCacheService>();
 
-            return new UnitOfWork(efCoreDbContext, dapperDbContext);
+            return new UnitOfWork(efCoreDbContext, dapperDbContext, redisCacheService);
         });
-        
         services.AddScoped<IActionTransactionHelper, ActionTransactionHelper>();
     }
 }
