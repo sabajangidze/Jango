@@ -10,11 +10,11 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
 {
     private readonly DbContext _context;
     private readonly WebDapperContext _dpContext;
-    private readonly IDistributedCache _distributedCache;
+    private readonly IRedisCacheService _redisCacheService;
 
-    public GenericRepository(WebDbContext context, WebDapperContext dpContext, IDistributedCache distributedCache)
+    public GenericRepository(WebDbContext context, WebDapperContext dpContext, IRedisCacheService redisCacheService)
     {
-        _distributedCache = distributedCache;
+        _redisCacheService = redisCacheService;
        _context = context;
        _dpContext = dpContext;
     }
@@ -23,31 +23,24 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         string key = $"member-{id}";
 
-        string? cachedMember = await _distributedCache.GetStringAsync(
-            key,
-            cancellationToken);
-        T member;
+        var cachedMember = await _redisCacheService.Get<T>(key, cancellationToken);
+        T value;
 
-        if (string.IsNullOrEmpty(cachedMember))
+        if (cachedMember == null)
         {
-            member = await GetById(table, id);
+            value = await GetById(table, id);
 
-            if (member is null)
+            if (value is null)
             {
-                return member;
+                return value;
             }
 
-            await _distributedCache.SetStringAsync(
-                key,
-                JsonConvert.SerializeObject(member),
-                cancellationToken);
+            await _redisCacheService.Set(key, value);
 
-            return member;
+            return value;
         }
 
-        member = JsonConvert.DeserializeObject<T>(cachedMember);
-
-        return member;
+        return cachedMember;
     }
 
     public void Add(T entity)

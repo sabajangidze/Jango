@@ -1,5 +1,7 @@
 ﻿using MassTransit;
 using Web.API.Filters;
+using Web.Domain.Abstractions;
+using Web.Infrastructure.Repositories;
 
 namespace Web.API.IoC
 {
@@ -35,6 +37,7 @@ namespace Web.API.IoC
 
                 redisOptions.Configuration = connection;
             });
+            services.AddSingleton<IRedisCacheService, RedisCacheService>();
         }
     }
 }
